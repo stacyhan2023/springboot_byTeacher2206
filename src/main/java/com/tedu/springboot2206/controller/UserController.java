@@ -1,5 +1,6 @@
 package com.tedu.springboot2206.controller;
 
+import com.tedu.springboot2206.entity.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -34,5 +35,18 @@ public class UserController {
         String nickname = request.getParameter("nickname");
         String ageStr = request.getParameter("age");
         System.out.println(username+","+password+","+nickname+","+ageStr);
+
+
+        int age = Integer.parseInt(ageStr);//将年龄转换为int值
+        /*
+            2
+            将该注册用户信息以User对象形式表示并序列化到文件中保存
+
+            将来所有的保存用户信息的文件都统一放在users目录下，并且每个保存用户的文件的名字格式:用户名.obj
+
+         */
+        User user = new User(username,password,nickname,age);
+
+
     }
 }
