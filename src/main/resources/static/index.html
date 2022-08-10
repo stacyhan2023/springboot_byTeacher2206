@@ -30,9 +30,23 @@
                     align:对其方式。left左对齐,right右对齐,center剧中对其
                     colspan:跨列合并列，合并是从左向右合并列
                     rowspan:跨行合并列，合并是从上向下合并列
+
+         <img>标签:图片。属性src用于指定图片的路径
+
+         在HTML页面中我们经常会通过指定一个路径去引入服务器的一个资源，在指定路径时，我们通常是以"/"作为开始
+         而这里的"/"可以理解为定义的就是服务器中static目录的位置。
+         本质上它表达的是地址栏中抽象路径中最开始的“/”位置。
+                              v
+         http://localhost:8088/index.html
+         例如:在index.html页面上引入一张图片:
+         <img src="/logo.png">
+         此时浏览器理解该路径实际位置时对应的就是:
+         http://localhost:8088/logo.png
+
     -->
     <center>
-        <h1>百度</h1>
+        <!--<h1>百度</h1>-->
+        <img src="/logo.png"><br>
         <input type="text" size="32">
         <input type="button" value="百度一下" onclick="alert('点你妹啊!')">
         <br>
