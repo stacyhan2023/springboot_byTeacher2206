@@ -23,5 +23,17 @@ public class UserController {
             2:处理注册
             3:设置响应对象，将处理结果回馈给浏览器
          */
+        //1获取注册页面上的表单信息
+        /*
+            HttpServletRequest的重要方法:
+            String getParameter(String name)
+            获取浏览器传递过来的某个参数的值
+            这里的传入的是参数名，对应的是页面表单输入框的名字(name属性对应的值)
+         */
+        String username = request.getParameter("username");//获取用户名
+        String password = request.getParameter("password");
+        String nickname = request.getParameter("nickname");
+        String ageStr = request.getParameter("age");
+        System.out.println(username+","+password+","+nickname+","+ageStr);
     }
 }
