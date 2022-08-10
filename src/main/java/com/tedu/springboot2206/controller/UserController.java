@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class UserController {
-
     /**
      *
      * @param request   请求对象，封装着浏览器发送过来的所有内容
