@@ -49,6 +49,25 @@ public class UserController {
         String nickname = request.getParameter("nickname");
         String ageStr = request.getParameter("age");
         System.out.println(username+","+password+","+nickname+","+ageStr);
+        /*
+            String username = request.getParameter("username");
+            作用:获取浏览器传递过来的参数username对应的值
+            返回的字符串可能存在2种特殊情况:
+            1:返回空字符串,说明用户在该输入框上没有输入任何内容
+            2:返回null,说明没有传递该参数过来
+         */
+        if(username==null||username.isEmpty()||password==null||password.isEmpty()||
+          nickname==null||nickname.isEmpty()||ageStr==null||ageStr.isEmpty()||
+          !ageStr.matches("[0-9]+")){
+            try {
+                response.sendRedirect("/reg_info_error.html");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+
+
 
 
         int age = Integer.parseInt(ageStr);//将年龄转换为int值
@@ -68,6 +87,13 @@ public class UserController {
         //在userDir(该对象表达当前项目目录下的users目录)目录中的文件xxx.obj(xxx就是当前注册用户名)
         //          new File(userDir,"fancq.obj")
         File file = new File(userDir,username+".obj");
+
+        //如果该文件存在则说明这是一个重复的用户
+        if(file.exists()){
+
+        }
+
+
 
         try(
                 FileOutputStream fos = new FileOutputStream(file);
