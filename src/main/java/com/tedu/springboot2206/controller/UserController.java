@@ -6,9 +6,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 
 @Controller
 public class UserController {
+    //表示保存所有用户信息的目录users
+    private static File userDir;
+
+    static{
+        userDir = new File("./users");
+        if(!userDir.exists()){
+           userDir.mkdirs();
+        }
+    }
+
     /**
      *
      * @param request   请求对象，封装着浏览器发送过来的所有内容
@@ -46,7 +57,12 @@ public class UserController {
 
          */
         User user = new User(username,password,nickname,age);
-
-
+        /*
+            File的重载构造器
+            File(File parent,String child)
+            该File对象表达的是在parent表示的目录中的子项child
+         */
+        //在userDir(该对象表达当前项目目录下的users目录)目录中的文件xxx.obj(xxx就是当前注册用户名)
+        File file = new File(userDir,username+".obj");
     }
 }
