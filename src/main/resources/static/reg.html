@@ -7,29 +7,43 @@
 <body>
 <center>
     <h1>用户注册</h1>
-    <table border="1">
-        <tr>
-            <td>用户名</td>
-            <td><input type="text"></td>
-        </tr>
-        <tr>
-            <td>密码</td>
-            <td><input type="password"></td>
-        </tr>
-        <tr>
-            <td>昵称</td>
-            <td><input type="text"></td>
-        </tr>
-        <tr>
-            <td>年龄</td>
-            <td><input type="text"></td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center">
-                <input type="button" value="注册">
-            </td>
-        </tr>
-    </table>
+    <!--
+        由于请求当前注册页面时，浏览器地址栏上的路径为:
+        http://localhost:8080/reg.html
+        因此在当前页面上我们定义的表单<form action="/regUser">时，表单提交后的实际请求路径为:
+        http://localhost:8080/regUser
+
+        而提交后，我们的服务端拿到该URL中抽象路径(/regUser)后，第一个"/"首先去定位static目录下是否有
+        该文件，若有则直接发送给浏览器
+
+
+        http://localhost:8080/regUser?
+     -->
+    <form action="/regUser" method="get">
+        <table border="1">
+            <tr>
+                <td>用户名</td>
+                <td><input name="username" type="text"></td>
+            </tr>
+            <tr>
+                <td>密码</td>
+                <td><input name="password" type="password"></td>
+            </tr>
+            <tr>
+                <td>昵称</td>
+                <td><input name="nickname" type="text"></td>
+            </tr>
+            <tr>
+                <td>年龄</td>
+                <td><input name="age" type="text"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="注册">
+                </td>
+            </tr>
+        </table>
+    </form>
 </center>
 </body>
 </html>
