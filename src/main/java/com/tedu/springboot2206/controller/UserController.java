@@ -90,7 +90,12 @@ public class UserController {
 
         //如果该文件存在则说明这是一个重复的用户
         if(file.exists()){
-
+            try {
+                response.sendRedirect("/have_user.html");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return;
         }
 
 
