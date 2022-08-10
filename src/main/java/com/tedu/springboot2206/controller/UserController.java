@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 @Controller
 public class UserController {
@@ -63,6 +66,32 @@ public class UserController {
             该File对象表达的是在parent表示的目录中的子项child
          */
         //在userDir(该对象表达当前项目目录下的users目录)目录中的文件xxx.obj(xxx就是当前注册用户名)
+        //          new File(userDir,"fancq.obj")
         File file = new File(userDir,username+".obj");
+
+        try(
+                FileOutputStream fos = new FileOutputStream(file);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+        ) {
+            oos.writeObject(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //3
+        try {
+            /*
+                让浏览器重定向到指定的路径查看处理结果页面
+                这里的路径"/reg_success.html"是发送给浏览器让其理解的.
+                所以浏览器还是当这里的"/"为抽象路径中第一个"/"的位置
+                相当于浏览器会根据该路径请求:
+                http://localhost:8080/reg_success.html
+             */
+            response.sendRedirect("/reg_success.html");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }
