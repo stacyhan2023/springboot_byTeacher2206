@@ -13,6 +13,8 @@
   1.3:article_fail.html 发表失败提示页面
 2:在controller包下新建处理文章相关的业务类:ArticleController
   并定义处理发表文章的方法:writeArticle()
+  注意:@Controller注解和@RequestMapping注解不要忘记!!!!
+
 3:在entity包下新建表示文章的对象:Article并实现序列化接口
 4:在writeArticle方法中将表单提交上来的标题和文章内容以Article对象形式序列化到目录articles
   下文件名格式:标题.obj
