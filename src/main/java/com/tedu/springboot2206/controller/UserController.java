@@ -55,11 +55,29 @@ public class UserController {
             pw.println("<html lang=\"en\">");
             pw.println("<head>");
             pw.println("<meta charset=\"UTF-8\">");
-            pw.println("<title>我的首页</title>");
+            pw.println("<title>用户列表</title>");
             pw.println("</head>");
             pw.println("<body>");
             pw.println("<center>");
             pw.println("<h1>用户列表</h1>");
+            pw.println("<table border=\"1\">");
+            pw.println("<tr>");
+            pw.println("<td>用户名</td>");
+            pw.println("<td>密码</td>");
+            pw.println("<td>昵称</td>");
+            pw.println("<td>年龄</td>");
+            pw.println("</tr>");
+
+            for(User user : userList) {
+                pw.println("<tr>");
+                pw.println("<td>"+user.getUsername()+"</td>");
+                pw.println("<td>"+user.getPassword()+"</td>");
+                pw.println("<td>"+user.getNickname()+"</td>");
+                pw.println("<td>"+user.getAge()+"</td>");
+                pw.println("</tr>");
+            }
+
+            pw.println("</table>");
             pw.println("</center>");
             pw.println("</body>");
             pw.println("</html>");
