@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 @Controller
 public class UserController {
@@ -21,6 +18,56 @@ public class UserController {
         if(!userDir.exists()){
            userDir.mkdirs();
         }
+    }
+
+    @RequestMapping("/loginUser")
+    public void login(HttpServletRequest request,HttpServletResponse response){
+        System.out.println("开始处理登录!!!!!!!!!!!!!!!!!!!!!!");
+        //1
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        if(username==null||username.isEmpty()||password==null||password.isEmpty()){
+            try {
+                response.sendRedirect("/login_info_error.html");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+
+        //2
+        //根据登录用户的用户名去users目录下寻找该用户信息
+        File file = new File(userDir,username+".obj");
+        if(file.exists()){//文件存在则说明该用户存在(用户名输入正确)
+            //反序列化文件中该用户曾经的注册信息
+            try (
+                    FileInputStream fis = new FileInputStream(file);
+                    ObjectInputStream ois = new ObjectInputStream(fis);
+            ){
+                User user = (User)ois.readObject();
+                //比较登录密码和注册时输入的密码是否一致
+                // a = "abc123"    b = "AbC123"
+                //a.equals(b) ==> false
+                //a.equalsIgnoreCase(b) ==> true
+                if(user.getPassword().equals(password)){
+                    //登录成功
+                    response.sendRedirect("/login_success.html");
+                    return;
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //登录失败
+        try {
+            response.sendRedirect("/login_fail.html");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     /**
