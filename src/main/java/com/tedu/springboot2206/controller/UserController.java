@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -18,6 +20,36 @@ public class UserController {
         if(!userDir.exists()){
            userDir.mkdirs();
         }
+    }
+
+    @RequestMapping("/userList")
+    public void userList(HttpServletRequest request,HttpServletResponse response){
+        System.out.println("开始处理动态页面!!!!!!!!!!!!!!!!!!!");
+        /*
+            1:读取users目录下的所有obj文件并反序列化然后将得到的所有User对象存入一个List集合
+            2:生成HTML页面并将所用用户信息体现在其中将其发送给浏览器
+         */
+        //1
+        List<User> userList = new ArrayList<>();
+        //1.1获取users目录中的所有obj文件
+        File[] subs = userDir.listFiles(f->f.getName().endsWith(".obj"));
+        //1.2将每个文件都反序列化得到User对象
+        for(File file : subs){
+            try (
+                    FileInputStream fis = new FileInputStream(file);
+                    ObjectInputStream ois = new ObjectInputStream(fis);
+            ){
+                User user = (User)ois.readObject();
+                userList.add(user);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println(userList);
+
+
+
+
     }
 
     @RequestMapping("/loginUser")
