@@ -47,7 +47,28 @@ public class UserController {
         }
         System.out.println(userList);
 
+        //2
+        try {
+            response.setContentType("text/html;charset=utf-8");
+            PrintWriter pw = response.getWriter();
+            pw.println("<!DOCTYPE html>");
+            pw.println("<html lang=\"en\">");
+            pw.println("<head>");
+            pw.println("<meta charset=\"UTF-8\">");
+            pw.println("<title>我的首页</title>");
+            pw.println("</head>");
+            pw.println("<body>");
+            pw.println("<center>");
+            pw.println("<h1>用户列表</h1>");
+            pw.println("</center>");
+            pw.println("</body>");
+            pw.println("</html>");
 
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }
