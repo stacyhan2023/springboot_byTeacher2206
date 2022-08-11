@@ -1,15 +1,15 @@
 package com.tedu.springboot2206.controller;
 
 import com.tedu.springboot2206.entity.Article;
+import com.tedu.springboot2206.entity.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ArticleController {
@@ -19,6 +19,64 @@ public class ArticleController {
         if(!articleDir.exists()){
             articleDir.mkdirs();
         }
+    }
+
+    @RequestMapping("/articleList")
+    public void articleList(HttpServletRequest request,HttpServletResponse response){
+        System.out.println("开始处理文章列表!!!!!!!!!!!");
+        //1反序列化所有的文章信息
+        List<Article> articleList = new ArrayList<>();
+        File[] subs = articleDir.listFiles(f->f.getName().endsWith(".obj"));
+        for(File sub : subs){
+            try (
+                    FileInputStream fis = new FileInputStream(sub);
+                    ObjectInputStream ois = new ObjectInputStream(fis);
+            ){
+               Article article = (Article)ois.readObject();
+               articleList.add(article);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //2
+        response.setContentType("text/html;charset=utf-8");
+        try {
+            PrintWriter pw = response.getWriter();
+            pw.println("<!DOCTYPE html>");
+            pw.println("<html lang=\"en\">");
+            pw.println("<head>");
+            pw.println("<meta charset=\"UTF-8\">");
+            pw.println("<title>文章列表</title>");
+            pw.println("</head>");
+            pw.println("<body>");
+            pw.println("<center>");
+            pw.println("<h1>文章列表</h1>");
+            pw.println("<table border=\"1\">");
+            pw.println("<tr>");
+            pw.println("<td>标题</td>");
+            pw.println("<td>作者</td>");
+            pw.println("<td>操作</td>");
+            pw.println("</tr>");
+
+            for(Article article : articleList) {
+                pw.println("<tr>");
+                pw.println("<td>"+article.getTitle()+"</td>");
+                pw.println("<td>"+article.getAuthor()+"</td>");
+                pw.println("<td><a href='/deleteArticle?title="+ article.getTitle() +"'>删除</a></td>");
+                pw.println("</tr>");
+            }
+
+            pw.println("</table>");
+            pw.println("</center>");
+            pw.println("</body>");
+            pw.println("</html>");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @RequestMapping("/writeArticle")
