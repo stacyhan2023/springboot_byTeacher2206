@@ -22,6 +22,15 @@ public class UserController {
         }
     }
 
+    @RequestMapping("/deleteUser")
+    public void delete(HttpServletRequest request,HttpServletResponse response){
+        System.out.println("开始处理删除用户!!!!!!!!!!!!!!!!!!!!!!!");
+        //http://localhost:8080/deleteUser?username=fancq
+        String username = request.getParameter("username");
+        System.out.println("要删除的用户是:"+username);
+
+    }
+
     @RequestMapping("/userList")
     public void userList(HttpServletRequest request,HttpServletResponse response){
         System.out.println("开始处理动态页面!!!!!!!!!!!!!!!!!!!");
@@ -66,6 +75,7 @@ public class UserController {
             pw.println("<td>密码</td>");
             pw.println("<td>昵称</td>");
             pw.println("<td>年龄</td>");
+            pw.println("<td>操作</td>");
             pw.println("</tr>");
 
             for(User user : userList) {
@@ -74,6 +84,16 @@ public class UserController {
                 pw.println("<td>"+user.getPassword()+"</td>");
                 pw.println("<td>"+user.getNickname()+"</td>");
                 pw.println("<td>"+user.getAge()+"</td>");
+                /*
+                    http://localhost:8080/deleteUser?username=fancq
+
+                    "<td><a href='/deleteUser?username='>删除</a></td>"
+                    "<td><a href='/deleteUser?username=" + str + "'>删除</a></td>"
+
+                    <td><a href='/deleteUser?username=fancq'>删除</a></td>
+
+                 */
+                pw.println("<td><a href='/deleteUser?username="+ user.getUsername() +"'>删除</a></td>");
                 pw.println("</tr>");
             }
 
