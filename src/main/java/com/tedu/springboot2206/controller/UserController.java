@@ -28,7 +28,6 @@ public class UserController {
         //http://localhost:8080/deleteUser?username=fancq
         String username = request.getParameter("username");
         System.out.println("要删除的用户是:"+username);
-
         File file = new File(userDir,username+".obj");
         file.delete();
 

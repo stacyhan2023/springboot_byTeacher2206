@@ -23,10 +23,8 @@ public class ArticleController {
     @RequestMapping("/deleteArticle")
     public void deleteArticle(HttpServletRequest request,HttpServletResponse response){
         String title = request.getParameter("title");
-
         File file = new File(articleDir,title+".obj");
         file.delete();
-
         try {
             response.sendRedirect("/articleList");
         } catch (IOException e) {
